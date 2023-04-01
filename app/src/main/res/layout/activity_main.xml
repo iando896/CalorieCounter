@@ -14,19 +14,10 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
+        android:focusabel="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
-
-    <TextView
-        android:id="@+id/titleCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calorie Counter"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -36,8 +27,8 @@
         android:layout_marginTop="8dp"
         android:scaleX="3"
         android:scaleY="3"
-        app:layout_constraintEnd_toEndOf="@+id/titleCard"
-        app:layout_constraintStart_toStartOf="@+id/titleCard"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -52,16 +43,18 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/titleCard"
-        app:layout_constraintStart_toStartOf="@+id/titleCard"
-        app:layout_constraintTop_toBottomOf="@+id/titleCard">
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="227dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/goalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Goal:"
+            android:textSize="34sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="263dp" />
@@ -72,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="1400"
+            android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/goalText"
             app:layout_constraintTop_toTopOf="parent" />
@@ -89,9 +83,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="200dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -109,7 +103,6 @@
         android:text="Foods eaten:"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
