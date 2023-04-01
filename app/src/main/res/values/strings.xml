@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Calorie Counter</string>
+    <string name="goal">Goal:</string>
+    <string name="food_header">Foods eaten</string>
+    <string name="food__dialog_header">Enter food information</string>
 </resources>
