@@ -1,10 +1,8 @@
 package com.iando896.caloriecounter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,24 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-public class AddFoodDialogFragment extends DialogFragment {
+public class UpdateFoodDialogFragment extends DialogFragment {
     Context mContext;
     EditText editFoodName;
     EditText editCalories;
     EditText editServings;
-    TextView noFoodsMessage;
 
     TextView foodNameWarning;
     TextView calorieWarning;
     TextView servingWarning;
+    int position;
 
-    public AddFoodDialogFragment(Context mContext, TextView noFoodsMessage) {
+    public UpdateFoodDialogFragment(Context mContext, int position) {
         this.mContext = mContext;
-        this.noFoodsMessage = noFoodsMessage;
+        this.position = position;
     }
 
     @NonNull
@@ -42,7 +37,9 @@ public class AddFoodDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_food, null);
-        builder.setView(view);
+        builder.setView(view)
+                .setPositiveButton(R.string.dialog_update, null)
+                .setNegativeButton(R.string.dialog_remove, null);
 
         editFoodName = view.findViewById(R.id.editFoodName);
         editCalories = view.findViewById(R.id.editCalorie);
@@ -52,23 +49,30 @@ public class AddFoodDialogFragment extends DialogFragment {
         calorieWarning = view.findViewById(R.id.caloriesWarning);
         servingWarning = view.findViewById(R.id.servingsWarning);
 
-        builder.setPositiveButton(R.string.dialog_add, null)
-                .setNegativeButton(R.string.dialog_cancel, null);
+        Food food = Utils.getAllFoods().get(position);
+        if (food.getName() != null)
+            editFoodName.setText(food.getName());
+        if (food.getCalories() != null)
+            editCalories.setText(food.getCalories().toString());
+        if (food.getServings() != null)
+            editServings.setText(food.getServings().toString());
+
         AlertDialog dialog = builder.create();
 
         dialog.setOnShowListener(dialogInterface -> {
-            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-            if (button != null) {
-                button.setOnClickListener(view1 -> {
+            Button button_pos = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            if (button_pos != null) {
+                button_pos.setOnClickListener(view1 -> {
                     if (!editFoodName.getText().toString().equals("") &&
-                        !editCalories.getText().toString().equals("") &&
-                        !editServings.getText().toString().equals("")) {
-                        Utils.addFood(new Food(editFoodName.getText().toString(),
-                                Integer.parseInt(editCalories.getText().toString()),
-                                Integer.parseInt(editServings.getText().toString())));
+                            !editCalories.getText().toString().equals("") &&
+                            !editServings.getText().toString().equals("")) {
+
+                        food.setName(editFoodName.getText().toString());
+                        food.setCalories(Integer.parseInt(editCalories.getText().toString()));
+                        food.setServings(Integer.parseInt(editServings.getText().toString()));
+
                         ((MainActivity)mContext).updateFoodRecView();
                         ((MainActivity)mContext).updateCalorieCount();
-                        noFoodsMessage.setVisibility(View.GONE);
                         Toast.makeText(requireContext(), "Food added", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
@@ -87,10 +91,20 @@ public class AddFoodDialogFragment extends DialogFragment {
                         servingWarning.setVisibility(View.GONE);
                 });
             }
+
+            Button button_neg = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
+            if (button_neg != null) {
+                button_neg.setOnClickListener(view1 -> {
+                    Utils.removeFood(position);
+                    ((MainActivity)mContext).updateFoodRecView();
+                    ((MainActivity)mContext).updateCalorieCount();
+                    dialog.dismiss();
+                });
+            }
         });
 
         return dialog;
     }
 
-    public static String TAG = "AddFoodDialogFragment";
+    public static String TAG = "UpdateFoodDialogFragment";
 }

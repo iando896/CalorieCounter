@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">Calorie Counter</string>
     <string name="goal">Goal:</string>
-    <string name="food_header">Foods eaten</string>
-    <string name="food__dialog_header">Enter food information</string>
+    <string name="food_header">Calories Consumed</string>
+    <string name="food_dialog_header">Enter food information</string>
+    <string name="food_dialog_name_warning">Food name required</string>
+    <string name="food_dialog_calorie_warning">Calories required</string>
+    <string name="food_dialog_serving_warning">Servings required</string>
+    <string name="add_food">No foods added</string>
+    <string name="food_name_hint">Food name</string>
+    <string name="dialog_add">Add</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_update">Update</string>
+    <string name="dialog_remove">Remove</string>
 </resources>

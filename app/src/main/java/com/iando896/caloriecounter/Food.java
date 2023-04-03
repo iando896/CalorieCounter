@@ -1,11 +1,11 @@
 package com.iando896.caloriecounter;
 
 public class Food {
-    String name;
-    int calories;
-    int servings;
+    private String name;
+    private Integer calories;
+    private Integer servings;
 
-    public Food(String name, int calories, int servings) {
+    public Food(String name, Integer calories, Integer servings) {
         this.name = name;
         this.calories = calories;
         this.servings = servings;
@@ -19,7 +19,7 @@ public class Food {
         this.name = name;
     }
 
-    public int getCalories() {
+    public Integer getCalories() {
         return calories;
     }
 
@@ -27,7 +27,7 @@ public class Food {
         this.calories = calories;
     }
 
-    public int getServings() {
+    public Integer getServings() {
         return servings;
     }
 
@@ -35,7 +35,7 @@ public class Food {
         this.servings = servings;
     }
 
-    public int getTotalCalories() {
+    public Integer getTotalCalories() {
         return calories * servings;
     }
 }

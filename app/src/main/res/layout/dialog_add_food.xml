@@ -8,34 +8,71 @@
         android:id="@+id/dialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/food__dialog_header"
+        android:text="@string/food_dialog_header"
         android:textSize="16sp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"/>
-    <EditText
+
+    <TextView
+        android:id="@+id/foodNameWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Food name"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:text="@string/food_dialog_name_warning"
+        android:textSize="16sp"
+        android:textColor="@color/red"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/editFoodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="@string/food_name_hint"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/caloriesWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/food_dialog_calorie_warning"
+        android:textSize="16sp"
+        android:textColor="@color/red"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+
+    <EditText
+        android:id="@+id/editCalorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:hint="Calories"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:inputType="number"
+        android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/editTextNumber2"
+    <TextView
+        android:id="@+id/servingsWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Servings"
+        android:text="@string/food_dialog_serving_warning"
+        android:textSize="16sp"
+        android:textColor="@color/red"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/editServings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:hint="Servings"
+        android:inputType="number"
+        android:minHeight="48dp" />
 </LinearLayout>
