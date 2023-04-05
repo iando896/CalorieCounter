@@ -1,8 +1,7 @@
-package com.iando896.caloriecounter;
+package com.iando896.caloriecounter.food;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.iando896.caloriecounter.MainActivity;
+import com.iando896.caloriecounter.R;
 
 import java.util.ArrayList;
 

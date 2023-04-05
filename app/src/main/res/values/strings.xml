@@ -12,4 +12,5 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_update">Update</string>
     <string name="dialog_remove">Remove</string>
+    <string name="starting_goal">2000</string>
 </resources>

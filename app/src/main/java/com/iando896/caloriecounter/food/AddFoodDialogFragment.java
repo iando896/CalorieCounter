@@ -1,10 +1,8 @@
-package com.iando896.caloriecounter;
+package com.iando896.caloriecounter.food;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,24 +14,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import com.iando896.caloriecounter.MainActivity;
+import com.iando896.caloriecounter.R;
+import com.iando896.caloriecounter.Utils;
 
 public class AddFoodDialogFragment extends DialogFragment {
     Context mContext;
     EditText editFoodName;
     EditText editCalories;
     EditText editServings;
-    TextView noFoodsMessage;
 
     TextView foodNameWarning;
     TextView calorieWarning;
     TextView servingWarning;
 
-    public AddFoodDialogFragment(Context mContext, TextView noFoodsMessage) {
+    public AddFoodDialogFragment(Context mContext) {
         this.mContext = mContext;
-        this.noFoodsMessage = noFoodsMessage;
     }
 
     @NonNull
@@ -57,7 +54,7 @@ public class AddFoodDialogFragment extends DialogFragment {
         AlertDialog dialog = builder.create();
 
         dialog.setOnShowListener(dialogInterface -> {
-            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (button != null) {
                 button.setOnClickListener(view1 -> {
                     if (!editFoodName.getText().toString().equals("") &&
@@ -68,7 +65,7 @@ public class AddFoodDialogFragment extends DialogFragment {
                                 Integer.parseInt(editServings.getText().toString())));
                         ((MainActivity)mContext).updateFoodRecView();
                         ((MainActivity)mContext).updateCalorieCount();
-                        noFoodsMessage.setVisibility(View.GONE);
+                        ((MainActivity)mContext).setNoFoodMessageVisibility(View.GONE);
                         Toast.makeText(requireContext(), "Food added", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }

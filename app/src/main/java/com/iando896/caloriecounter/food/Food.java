@@ -1,4 +1,4 @@
-package com.iando896.caloriecounter;
+package com.iando896.caloriecounter.food;
 
 public class Food {
     private String name;

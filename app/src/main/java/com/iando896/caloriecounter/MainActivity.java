@@ -6,21 +6,25 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
+import com.iando896.caloriecounter.food.AddFoodDialogFragment;
+import com.iando896.caloriecounter.food.Food;
+import com.iando896.caloriecounter.food.FoodRecViewAdapter;
+import com.iando896.caloriecounter.food.UpdateFoodDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,30 +34,33 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addFood;
     CardView foodListCard;
     Integer calorieGoalValue;
-    Integer currentCalorie;
     RecyclerView foodRecView;
     TextView noFoodMessage;
-//    ArrayList<Dialog> addFoodDialogArrayList;
+    ProgressBar progressBar;
+    ImageView refreshBtn;
+    ColorFilter progressBarOrigColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        currentCalorie = 0;
+
         Utils.getInstance();
         initViews();
+
         updateCalorieCount();
+        progressBarOrigColor = progressBar.getProgressDrawable().getColorFilter();
+        progressBar.setMax(Integer.parseInt(calorieGoal.getText().toString()));
+
+        refreshBtn.setOnClickListener(v -> {
+            refresh();
+        });
 
         addFood.setOnClickListener(view -> {
             //Open dialog to add food
             //Attach dialog to array list
-            AddFoodDialogFragment addFoodDialogFragment = new AddFoodDialogFragment(this, noFoodMessage);
+            AddFoodDialogFragment addFoodDialogFragment = new AddFoodDialogFragment(this);
             addFoodDialogFragment.show(getSupportFragmentManager(), AddFoodDialogFragment.TAG);
-//            addFoodDialogFragmentArrayList.get(addFoodDialogFragmentArrayList.size() - 1).show(getSupportFragmentManager(), AddFoodDialogFragment.TAG);
-            //addFoodDialogFragmentArrayList.get(addFoodDialogFragmentArrayList.size() - 1).getDialog().s;
-            //updateFoodRecView();
-            //update info
-            //Toast.makeText(MainActivity.this, "Add food button selected", Toast.LENGTH_SHORT).show();
         });
 
     }
@@ -95,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         foodListCard = findViewById(R.id.foodListLayout);
         foodRecView = findViewById(R.id.foodList);
         noFoodMessage = findViewById(R.id.noFoodMessage);
+        progressBar = findViewById(R.id.progressBar);
+        refreshBtn = findViewById(R.id.refresh);
+
 
         initRecView();
     }
@@ -105,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
             currentCalorie += f.getTotalCalories();
         }
         calorieCount.setText(currentCalorie.toString());
+        //Change progress bar?
+        if (currentCalorie <= progressBar.getMax()) {
+            progressBar.setProgress(currentCalorie, true);
+            progressBar.getProgressDrawable().setColorFilter(progressBarOrigColor);
+        } else {
+            progressBar.setProgress(progressBar.getMax());
+            progressBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_IN));
+        }
     }
 
     public void updateFoodRecView() {
@@ -117,5 +135,16 @@ public class MainActivity extends AppCompatActivity {
     public void showUpdateDialog(int position) {
         UpdateFoodDialogFragment updateFoodDialogFragment = new UpdateFoodDialogFragment(this, position);
         updateFoodDialogFragment.show(getSupportFragmentManager(), UpdateFoodDialogFragment.TAG);
+    }
+
+    public void setNoFoodMessageVisibility(int v) {
+        noFoodMessage.setVisibility(v);
+    }
+
+    private void refresh() {
+        //TODO: Ensure users want to clear
+        Utils.clear();
+        updateFoodRecView();
+        updateCalorieCount();
     }
 }

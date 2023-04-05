@@ -1,4 +1,4 @@
-package com.iando896.caloriecounter;
+package com.iando896.caloriecounter.food;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,6 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.iando896.caloriecounter.MainActivity;
+import com.iando896.caloriecounter.R;
+import com.iando896.caloriecounter.Utils;
+import com.iando896.caloriecounter.food.Food;
 
 public class UpdateFoodDialogFragment extends DialogFragment {
     Context mContext;
