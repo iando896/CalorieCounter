@@ -6,10 +6,7 @@
     android:layout_height="match_parent"
     android:alwaysDrawnWithCache="false"
     tools:context=".MainActivity">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addFood"
         android:layout_width="wrap_content"
@@ -47,8 +44,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="227dp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

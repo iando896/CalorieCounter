@@ -9,7 +9,7 @@
         android:id="@+id/foodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Food Name"
+        android:text="@string/food_name"
         android:textSize="18sp"
         android:layout_marginLeft="10dp" />
 
@@ -17,7 +17,6 @@
         android:id="@+id/calorieListCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
         android:textSize="18sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"

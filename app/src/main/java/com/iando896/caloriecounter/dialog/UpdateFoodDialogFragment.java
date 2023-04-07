@@ -1,4 +1,4 @@
-package com.iando896.caloriecounter.food;
+package com.iando896.caloriecounter.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,7 +21,6 @@ import com.iando896.caloriecounter.Utils;
 import com.iando896.caloriecounter.food.Food;
 
 public class UpdateFoodDialogFragment extends DialogFragment {
-    Context mContext;
     EditText editFoodName;
     EditText editCalories;
     EditText editServings;
@@ -31,8 +30,7 @@ public class UpdateFoodDialogFragment extends DialogFragment {
     TextView servingWarning;
     int position;
 
-    public UpdateFoodDialogFragment(Context mContext, int position) {
-        this.mContext = mContext;
+    public UpdateFoodDialogFragment(int position) {
         this.position = position;
     }
 
@@ -54,7 +52,7 @@ public class UpdateFoodDialogFragment extends DialogFragment {
         calorieWarning = view.findViewById(R.id.caloriesWarning);
         servingWarning = view.findViewById(R.id.servingsWarning);
 
-        Food food = Utils.getAllFoods().get(position);
+        Food food = Utils.getInstance(requireContext()).getAllFoods().get(position);
         if (food.getName() != null)
             editFoodName.setText(food.getName());
         if (food.getCalories() != null)
@@ -65,50 +63,55 @@ public class UpdateFoodDialogFragment extends DialogFragment {
         AlertDialog dialog = builder.create();
 
         dialog.setOnShowListener(dialogInterface -> {
-            Button button_pos = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            Button button_pos = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (button_pos != null) {
                 button_pos.setOnClickListener(view1 -> {
-                    if (!editFoodName.getText().toString().equals("") &&
-                            !editCalories.getText().toString().equals("") &&
-                            !editServings.getText().toString().equals("")) {
-
-                        food.setName(editFoodName.getText().toString());
-                        food.setCalories(Integer.parseInt(editCalories.getText().toString()));
-                        food.setServings(Integer.parseInt(editServings.getText().toString()));
-
-                        ((MainActivity)mContext).updateFoodRecView();
-                        ((MainActivity)mContext).updateCalorieCount();
-                        Toast.makeText(requireContext(), "Food added", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-
-                    if (editFoodName.getText().toString().equals(""))
-                        foodNameWarning.setVisibility(View.VISIBLE);
-                    else
-                        foodNameWarning.setVisibility(View.GONE);
-                    if (editCalories.getText().toString().equals(""))
-                        calorieWarning.setVisibility(View.VISIBLE);
-                    else
-                        calorieWarning.setVisibility(View.GONE);
-                    if (editServings.getText().toString().equals(""))
-                        servingWarning.setVisibility(View.VISIBLE);
-                    else
-                        servingWarning.setVisibility(View.GONE);
+                    positiveButtonAction(dialog);
                 });
             }
 
-            Button button_neg = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
+            Button button_neg = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
             if (button_neg != null) {
                 button_neg.setOnClickListener(view1 -> {
-                    Utils.removeFood(position);
-                    ((MainActivity)mContext).updateFoodRecView();
-                    ((MainActivity)mContext).updateCalorieCount();
+                    Utils.getInstance(requireContext()).removeFood(position);
+                    ((MainActivity)requireContext()).updateFoodRecView();
+                    ((MainActivity)requireContext()).updateCalorieCount();
                     dialog.dismiss();
                 });
             }
         });
 
         return dialog;
+    }
+
+    private void positiveButtonAction(Dialog dialog) {
+        if (!editFoodName.getText().toString().equals("") &&
+                !editCalories.getText().toString().equals("") &&
+                !editServings.getText().toString().equals("")) {
+
+            Utils.getInstance(requireContext()).updateFood(position, editFoodName.getText().toString(),
+                    Integer.parseInt(editCalories.getText().toString()),
+                    Integer.parseInt(editServings.getText().toString()));
+
+            ((MainActivity)requireContext()).updateFoodRecView();
+            ((MainActivity)requireContext()).updateCalorieCount();
+            Toast.makeText(requireContext(), editCalories.getText().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Food updated", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }
+
+        if (editFoodName.getText().toString().equals(""))
+            foodNameWarning.setVisibility(View.VISIBLE);
+        else
+            foodNameWarning.setVisibility(View.GONE);
+        if (editCalories.getText().toString().equals(""))
+            calorieWarning.setVisibility(View.VISIBLE);
+        else
+            calorieWarning.setVisibility(View.GONE);
+        if (editServings.getText().toString().equals(""))
+            servingWarning.setVisibility(View.VISIBLE);
+        else
+            servingWarning.setVisibility(View.GONE);
     }
 
     public static String TAG = "UpdateFoodDialogFragment";

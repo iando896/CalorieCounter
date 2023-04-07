@@ -1,4 +1,4 @@
-package com.iando896.caloriecounter.food;
+package com.iando896.caloriecounter.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,9 +18,10 @@ import androidx.fragment.app.DialogFragment;
 import com.iando896.caloriecounter.MainActivity;
 import com.iando896.caloriecounter.R;
 import com.iando896.caloriecounter.Utils;
+import com.iando896.caloriecounter.food.Food;
 
 public class AddFoodDialogFragment extends DialogFragment {
-    Context mContext;
+
     EditText editFoodName;
     EditText editCalories;
     EditText editServings;
@@ -29,8 +30,7 @@ public class AddFoodDialogFragment extends DialogFragment {
     TextView calorieWarning;
     TextView servingWarning;
 
-    public AddFoodDialogFragment(Context mContext) {
-        this.mContext = mContext;
+    public AddFoodDialogFragment() {
     }
 
     @NonNull
@@ -57,36 +57,42 @@ public class AddFoodDialogFragment extends DialogFragment {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (button != null) {
                 button.setOnClickListener(view1 -> {
-                    if (!editFoodName.getText().toString().equals("") &&
-                        !editCalories.getText().toString().equals("") &&
-                        !editServings.getText().toString().equals("")) {
-                        Utils.addFood(new Food(editFoodName.getText().toString(),
-                                Integer.parseInt(editCalories.getText().toString()),
-                                Integer.parseInt(editServings.getText().toString())));
-                        ((MainActivity)mContext).updateFoodRecView();
-                        ((MainActivity)mContext).updateCalorieCount();
-                        ((MainActivity)mContext).setNoFoodMessageVisibility(View.GONE);
-                        Toast.makeText(requireContext(), "Food added", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-
-                    if (editFoodName.getText().toString().equals(""))
-                        foodNameWarning.setVisibility(View.VISIBLE);
-                    else
-                        foodNameWarning.setVisibility(View.GONE);
-                    if (editCalories.getText().toString().equals(""))
-                        calorieWarning.setVisibility(View.VISIBLE);
-                    else
-                        calorieWarning.setVisibility(View.GONE);
-                    if (editServings.getText().toString().equals(""))
-                        servingWarning.setVisibility(View.VISIBLE);
-                    else
-                        servingWarning.setVisibility(View.GONE);
+                    positiveButtonAction(dialog);
                 });
             }
         });
 
         return dialog;
+    }
+
+    private void positiveButtonAction(Dialog dialog) {
+        if (!editFoodName.getText().toString().equals("") &&
+                !editCalories.getText().toString().equals("") &&
+                !editServings.getText().toString().equals("")) {
+            //TODO: Check legal values for food
+
+            Utils.getInstance(requireContext()).addFood(new Food(editFoodName.getText().toString(),
+                    Integer.parseInt(editCalories.getText().toString()),
+                    Integer.parseInt(editServings.getText().toString())));
+            ((MainActivity)requireContext()).updateFoodRecView();
+            ((MainActivity)requireContext()).updateCalorieCount();
+            ((MainActivity)requireContext()).setNoFoodMessageVisibility(View.GONE);
+//                        Toast.makeText(requireContext(), "Food added", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }
+
+        if (editFoodName.getText().toString().equals(""))
+            foodNameWarning.setVisibility(View.VISIBLE);
+        else
+            foodNameWarning.setVisibility(View.GONE);
+        if (editCalories.getText().toString().equals(""))
+            calorieWarning.setVisibility(View.VISIBLE);
+        else
+            calorieWarning.setVisibility(View.GONE);
+        if (editServings.getText().toString().equals(""))
+            servingWarning.setVisibility(View.VISIBLE);
+        else
+            servingWarning.setVisibility(View.GONE);
     }
 
     public static String TAG = "AddFoodDialogFragment";
