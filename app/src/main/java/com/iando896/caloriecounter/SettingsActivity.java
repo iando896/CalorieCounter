@@ -4,11 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
@@ -65,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
                 if (Integer.parseInt(preference.getText()) < 50000) {
                     editor.putString("calorie_goal_preference", preference.getText());
                     editor.commit();
-                    Toast.makeText(getActivity(), "Destroyed", Toast.LENGTH_SHORT).show();
                 }
             } catch (NumberFormatException e) {
 

@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iando896.caloriecounter.dialog.AddFoodDialogFragment;
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "Opened setting", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Toast.makeText(this, "Resuming", Toast.LENGTH_SHORT).show();
         super.onResume();
         applySettings();
         progressBarOrigColor = calorieProgress.getProgressDrawable().getColorFilter();
@@ -99,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void applySettings() {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
-        calorieGoal.setText(SP.getString("calorie_goal_preference", null));
+        String s;
+        if ((s = SP.getString("calorie_goal_preference", null)) != null)
+            calorieGoal.setText(s);
 //        SP.getString("calorie")
     }
 

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,8 +94,6 @@ public class UpdateFoodDialogFragment extends DialogFragment {
 
             ((MainActivity)requireContext()).updateFoodRecView();
             ((MainActivity)requireContext()).updateCalorieCount();
-            Toast.makeText(requireContext(), editCalories.getText().toString(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(requireContext(), "Food updated", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         }
 
